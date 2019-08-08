@@ -1,6 +1,6 @@
 {
   "name": "simple-icons",
-  "version": "1.2.9",
+  "version": "1.12.0",
   "description": "SVG icons for popular brands https://simpleicons.org",
   "homepage": "https://www.simpleicons.org",
   "keywords": [
@@ -16,11 +16,26 @@
     "url": "https://github.com/simple-icons/simple-icons/issues"
   },
   "author": "Simple Icons Collaborators",
-  "license": "CC0",
+  "license": "CC0-1.0",
   "devDependencies": {
-    "jsonlint": "^1.6.2"
+    "editorconfig-checker": "^2.0.8",
+    "jest": "^24.1.0",
+    "jsonlint2": "^1.7.1",
+    "svglint": "^1.0.5",
+    "svgo": "^1.3.0",
+    "uglify-js": "^3.6.0"
   },
   "scripts": {
-    "jsonlint": "jsonlint _data/simple-icons.json -q -V .jsonlintschema"
+    "build": "node scripts/build-package.js",
+    "clean": "rm icons/*.js index.js",
+    "jsonlint": "jsonlint _data/simple-icons.json -q -V .jsonlintschema",
+    "svglint": "svglint icons/* --ci",
+    "wslint": "editorconfig-checker --ignore",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
+    "test": "jest",
+    "pretest": "npm run prepublishOnly",
+    "posttest": "npm run postpublish",
+    "svgo": "svgo --config=./.svgo.yml"
   }
 }
